@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <% include partials/head.ejs%>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="/public/stylesheets/login.css">
+</head>
+<body>
+<div class="center-container">
+    <div class="header-w3l animated rollIn">
+        <h1><%= (typeof(error) == 'string' && error) ? error : "My Shows"%></h1>
+    </div>
+    <div class="main-content-agile item animated bounceInUp">
+        <div class="sub-main-w3 " style="margin-top: 4em; margin-bottom: 7em;">
+            <div class="wthree-pro">
+                <h2>Quick Registration</h2>
+            </div>
+            <form action="/users/register" method="post">
+                <div class="pom-agile">
+                    <input type="text" class="user" name="username" value="<%= (typeof(username) == 'string' && username) ? username : ""%>" placeholder="Username" required  pattern="[-\w]{5,30}">
+                    <i class="fa fa-user icon1" aria-hidden="true"></i>
+                </div>
+                <div class="pom-agile">
+                    <input type="email" placeholder="Email" name="email" value="<%= (typeof(email) == 'string' && email) ? email : ""%>" class="pass" required>
+                    <i class="fa fa-envelope icon2" aria-hidden="true"></i>
+                </div>
+                <div class="pom-agile">
+                    <input type="password" name="password" class="pass" required pattern="\w{4,}\d\w*|qb" placeholder="Password">
+                    <i class="fa fa-unlock icon2" aria-hidden="true"></i>
+                </div>
+                <div class="pom-agile">
+                    <input type="password" name="confirmPassword" class="pass" required placeholder="Confirm Password" pattern="\w{4,}\d\w*|qb">
+                    <i class="fa fa-lock icon1" style="margin-top: 5px" aria-hidden="true"></i>
+                </div>
+                <div class="sub-w3l">
+                    <h6 style="margin-right: 178px; margin-top: 1em;"><a href="/users/login">Login</a></h6>
+                    <div class="right-w3l" style="margin-top: 1em;">
+                        <input type="submit" value="Register">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

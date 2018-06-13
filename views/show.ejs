@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head.ejs%>
+</head>
+<body class="MyBody">
+<% include partials/navBar.ejs%>
+<div class="MyContainer">
+    <main>
+        <% include partials/navList.ejs%>
+        <div class="d-flex justify-content-between">
+            <div class="p-2">
+                <h3><%= name%></h3>
+            </div>
+            <div class="p-2 d-flex">
+                <div id="buttons-<%= show._id%>" class="p-2">
+                <% if (user.list.includes(show._id)) {%>
+                    <button type="button" class="btn btn-danger btn-md" value="<%=user._id%>" onclick="deleteFromUserList(<%=show._id%>)">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <% } else { %>
+                    <button type="button" class="btn btn-warning btn-md" style="width: 38px" value="<%=user._id%>" onclick="saveToUserList(<%=show._id%>)">
+                        <i class="fa fa-star-o"></i>
+                    </button>
+                    <% } %>
+                </div>
+                <% if (user.role === 'admin') { %>
+                <div class="p-2">
+                    <button type="button" class="btn btn-search btn-md" data-toggle="modal" data-target="#confirmDelete">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                    <a href="/shows/update/<%= show._id%>">
+                        <button type="button" class="btn btn-info btn-md" style="margin-right: 12px;width: 38px">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </button>
+                    </a>
+                </div>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="showPresent">
+            <img src="<%= show.image%>" alt="Image" class="item animated zoomIn showImage">
+            <div class="item animated zoomIn showInfo">
+                <span>Genre: </span><%= show.genre%><br>
+                <span>Country of origin: </span><%= show.country%><br>
+                <span>IMDB rating: </span><%= show.ratingIMDB%><br>
+                <span>Duration: </span><%= show.duration%><br>
+                <span>Original run: </span><%= show.dateRelease%><br>
+            </div>
+        </div>
+        <div class="item animated slideInUp">
+            <video width="780" height="500" controls>
+                <source src="<%= show.video%>" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+            <p><span>Description: </span></p>
+            <p class="descriptions"><%= show.description%></p>
+        </div>
+    </main>
+
+    <% include partials/popularList.ejs%>
+</div>
+<div id="confirmDelete" class="modal fade" style="display: none;">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <i class="fa fa-times-circle-o fa-5x" style="color: #cc0000"></i>
+            <h4>Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="p-2 btn btn-info" data-dismiss="modal">Cancel</button>
+                <form method="post" action="/shows/delete/<%= show._id%>">
+                    <button type="submit" class="p-2 btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/public/js/search.js"></script>
+</body>
+</html>

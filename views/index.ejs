@@ -1,0 +1,46 @@
+<!Doctype html>
+<html lang="EN">
+<head>
+    <% include partials/head.ejs%>
+</head>
+<body class="MyBody">
+<% include partials/navBar.ejs%>
+<div class="MyContainer">
+    <main>
+        <% include partials/navList.ejs%>
+        <div class="whyList">
+            <h1>Why am I here?</h1>
+            <ul>
+                <li><p>Track and rate your favourite TV-shows</p></li>
+                <li><p>Keep record of the episodes you've watched</p></li>
+                <li><p>Find something new to watch</p></li>
+                <li><p>Get stats — days you've spent watching TV</p></li>
+                <li><p>Post show ratings in social media</p></li>
+                <li><p>Don't miss any new series!</p></li>
+            </ul>
+        </div>
+        <hr>
+        <h2>What should I do?</h2>
+        <div class="row">
+            <div class="col"><img src="/public/images/pic1.jpg" alt="" class="indexTextImage">
+                <p class="link">Find and add the shows I watch</p></div>
+            <div class="col"><img src="/public/images/pic2.jpg" alt="" class="indexTextImage">
+                <p class="link">Check episodes you've</p></div>
+            <div class="col"><img src="/public/images/pic3.jpg" alt="" class="indexTextImage">
+                <p class="link">Rate shows and episodes</p></div>
+        </div>
+        <hr>
+        <div>
+            <h1>About us</h1>
+            <p>We are <strong>1</strong> users.</p>
+            <p>All together we've wasted </p>
+            <p><strong> 0 years 0 months 0 day 0 hours 0 minutes</strong>.</p>
+            <p>Which, in average per person, is:</p>
+            <p> 0 month 0 days 0 hours 0 minutes.</p>
+        </div>
+    </main>
+    <% include partials/popularList.ejs%>
+</div>
+<script src="/public/js/bundle.js"></script>
+</body>
+</html>

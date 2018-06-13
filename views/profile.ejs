@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head.ejs%>
+</head>
+<body class="MyBody">
+<% include partials/navBar.ejs%>
+<div class="MyContainer">
+    <main>
+        <% include partials/navList.ejs%>
+        <div class="container">
+            <% if (user.role === 'admin') { %>
+            <h3 class="text-left text-warning">Users:</h3>
+            <div class="row col-md-12 col-md-offset-2 custyle">
+                <table  class="table table-striped custab">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="users">
+                    <%let iter = 0;%>
+
+                    <% for (let it of users) {%>
+                            <% if (it._id !== user._id) {%>
+                                <tr id="<%= it._id%>">
+                                    <td><%= (user.role === 'admin') ? it._id : iter%></td>
+                                    <td><%= it.username%></td>
+                                    <td><%= it.email%></td>
+                                    <td><%= it.role%></td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-search btn-md" value="<%= it._id%>" data-toggle="modal" data-target="#userConfirmDelete" onclick="setIdToModal(this.value)">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <%}%>
+                        <%}%>
+                    </tbody>
+                </table>
+            </div>
+            <% } %>
+            <h3 class="text-left text-warning">My Shows:</h3>
+            <div class="row col-md-12 col-md-offset-2 custyle">
+                <table class="table table-striped custab">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Username</th>
+                        <th>Genre</th>
+                        <th>RatingIMDB</th>
+                        <th>Duration</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="shows">
+                    <%iter = 0;%>
+                    <% for (let it of shows) {%>
+                    <% if (it !== user) {%>
+                    <%iter++;%>
+                    <tr id="<%= it._id%>">
+                        <td><%= (user.role === 'admin') ? it._id : iter%></td>
+                        <td><a href="/shows/<%= it._id%>"><%= it.name%></a></td>
+                        <td><%= it.genre%></td>
+                        <td><%= it.ratingIMDB%></td>
+                        <td><%= it.duration%></td>
+                        <td class="text-center">
+                            <div class="p-2 d-flex">
+                            <div id="buttons-<%= it._id%>" class="p-2">
+                                <% if (user.list.includes(it._id)) {%>
+                                    <button type="button" class="btn btn-danger btn-md" value="<%=user._id%>" onclick="deleteFromUserList(<%=it._id%>)">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                <% } else { %>
+                                    <button type="button" class="btn btn-warning btn-md" style="width: 38px" value="<%=user._id%>" onclick="saveToUserList(<%=it._id%>)">
+                                        <i class="fa fa-star-o"></i>
+                                    </button>
+                                <% } %>
+                            </div>
+                            <% if (user.role === 'admin') { %>
+                                <div class="p-2">
+                                    <button type="button" class="p-2 btn btn-search btn-md" value="<%=it._id%>" data-toggle="modal" onclick="setIdToModal(this.value)" data-target="#confirmDelete">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </div>
+                            <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                    <%}%>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <% include partials/popularList.ejs%>
+</div>
+
+<div id="confirmDelete" class="modal fade" style="display: none;">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <i class="fa fa-times-circle-o fa-5x" style="color: #cc0000"></i>
+            <h4>Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to delete these Show? This process cannot be undone.</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="p-2 btn btn-info" data-dismiss="modal">Cancel</button>
+                <button id="deleteButton" type="submit" value="" class="p-2 btn btn-danger"  data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="userConfirmDelete" class="modal fade" style="display: none;">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <i class="fa fa-times-circle-o fa-5x" style="color: #cc0000"></i>
+            <h4>Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to delete these User? This process cannot be undone.</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="p-2 btn btn-info" data-dismiss="modal">Cancel</button>
+                <button id="userDeleteButton" type="submit" value="" class="p-2 btn btn-danger"  data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/public/js/search.js"></script>
+</body>
+</html>

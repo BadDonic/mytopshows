@@ -1,0 +1,10 @@
+<ul class="item animated bounceInRight navList">
+    <li><a <% if (name !== "Home") { %> href="/" <% } %>> <i class="fa fa-home" aria-hidden="true"></i></a></li>
+    <% if (name !== "Home") { %>
+        <li><a <% if (name !== "Shows") { %> href="/shows" <% } %>>Shows</a></li>
+        <% if (name !== "Shows") { %>
+            <li><%= name %></li>
+        <% } %>
+    <% } %>
+</ul>
+<hr>

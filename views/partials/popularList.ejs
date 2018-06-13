@@ -1,0 +1,8 @@
+<aside role="complementary">
+    <h3 class="item animated lightSpeedIn">Most Popular</h3>
+    <ul class="item animated lightSpeedIn popularList">
+        <%for (let it of list) { %>
+        <li><a href="/shows/<%= it._id%>"><%= it.name %></a></li>
+        <% } %>
+    </ul>
+</aside>

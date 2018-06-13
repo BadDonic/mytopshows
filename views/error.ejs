@@ -1,0 +1,21 @@
+<!Doctype html>
+<html lang="EN">
+<head>
+    <% include partials/head.ejs%>
+</head>
+<body class="MyBody">
+<% include partials/navBar.ejs%>
+<div class="MyContainer">
+    <img src="/public/images/<%= name%>.png" alt="" style="display: block;
+    margin: 0 auto; width: 500px; height: 500px" />
+    <% let message = {
+        404: 'The Requested Url Was Not Found !...',
+        403: 'Forbidden',
+        500: 'Internal Server Errror'
+    }%>
+    <div class="text-center" style="color: #cc0000">
+        <h1 style="color: #cc0000"><%= message[name]%></h1>
+    </div>
+</div>
+</body>
+</html>

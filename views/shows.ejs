@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head.ejs%>
+</head>
+<body class="MyBody">
+
+<% include partials/navBar.ejs%>
+
+<div id="main" class="MyContainer">
+    <main>
+        <% include partials/navList.ejs%>
+        <div id="inputDiv" class="d-flex">
+            <input type="hidden" name="page" value='<%= page%>'>
+            <% if (user.role === 'admin') { %>
+            <a href="/shows/add">
+                <button type="button" class="btn btn-success btn-lg" style="margin-right: 5px">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </a>
+            <% } %>
+            <input class="form-control form-control-lg" type="text" name="search" placeholder="Search" value="<%= searchedText%>">
+            <button type="button" class="btn btn-search btn-lg"><i class="fa fa-search"></i></button>
+        </div>
+        <div id="showList">
+        <% if (searchedList.length !== 0)  { %>
+            <% for (let it of searchedList) {%>
+                <div class="showsList item animated bounceInUp">
+                    <% if (user.role === 'admin') { %>
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <a href="/shows/update/<%= it._id%>" >
+                                <button type="button" class="btn btn-info btn-md" style="width: 38px">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </button>
+                            </a>
+                        </div>
+                        <div class="p-2">
+                            <a href="/shows/<%= it._id%>"><h3 align="center"><%= it.name%></h3></a>
+                        </div>
+                        <div class="p-2">
+                                <button type="button" class="btn btn-search btn-md" value="<%= it._id%>" data-toggle="modal" data-target="#confirmDelete">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                        </div>
+                    </div>
+                    <% }else { %>
+                        <a href="/shows/<%= it._id%>"><h3 align="center"><%= it.name%></h3></a>
+                    <% } %>
+                    <a href="/shows/<%= it._id%>"><img src="<%= it.image%>" style=" border-radius: 30%; width: 100%"></a>
+                    <p class="descriptions"><%= it.description%></p>
+                </div>
+            <% } %>
+        <div class="pagination item animated bounceInUp">
+            <% if (page !== 1) { %>
+            <div class="prev">
+                    <button type="button" class="btn btn-search" onclick="searchShows('prev')">&larr; Previous</button>
+            </div>
+            <% } %>
+
+            <% if (next) { %>
+            <div class="next" style="position: absolute; right: 0;">
+                    <button type="submit" class="btn btn-search" onclick="searchShows('next')">Next &rarr;</button>
+            </div>
+            <% } %>
+        </div>
+        <% }else  { %>
+            <h3 class='notFound item animated bounceInUp'>Not Found</h3>
+        <% } %>
+        </div>
+    </main>
+    <% include partials/popularList.ejs %>
+</div>
+<div id="confirmDelete" class="modal fade" style="display: none;">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <i class="fa fa-times-circle-o fa-5x" style="color: #cc0000"></i>
+            <h4>Are you sure?</h4>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="p-2 btn btn-info" data-dismiss="modal">Cancel</button>
+                <button id="deleteButton" type="submit" value="" class="p-2 btn btn-danger" onclick="deleteShow(this.value)" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/public/js/search.js"></script>
+</body>
+</html>
